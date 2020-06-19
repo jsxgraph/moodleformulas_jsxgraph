@@ -65,7 +65,7 @@ $(function() {
     var line3 = board.create('segment', [[3,-10], [3,100]], {visible:false});
     var line4 = board.create('segment', [[4,-10], [4,100]], {visible:false});
 
-    // Four points, fixated to the lines, called 'gliders'.
+    // The four points fixated to the lines, called 'gliders'.
     var point_attr = {fixed: formulas.isSolved, snapToGrid: true, withLabel: false}
     var p = [];
     p.push(board.create('glider', [1, t1, line1], point_attr));
@@ -73,7 +73,7 @@ $(function() {
     p.push(board.create('glider', [3, t3, line3], point_attr));
     p.push(board.create('glider', [4, t4, line4], point_attr));
 
-    // The polyhonal chain, aka. polyline, through the four points
+    // The polygonal chain, aka. polyline, through the four points
     board.create('polygonalchain', p, {borders: {strokeWidth: 3}});
 
     // Function to export the y-coordinates of the points to formulas.
@@ -84,7 +84,7 @@ $(function() {
       formulas.set(3, p[3].Y());
     };
   
-    // Whenever the construction is altered, the values of the points are sent to formulas.
+    // Whenever the construction is altered the values of the points are sent to formulas.
     board.on('update', function () {
         setValues();
     });

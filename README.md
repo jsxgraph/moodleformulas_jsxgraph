@@ -19,11 +19,11 @@ After having done so, the student clicks on the Check-button to check the correc
 
 ![screen 2](img/screen2.png)
 
-The above question can be realized with *formulas* (without JSXGraph) by supplying the following data:
+The above question can be realized with *formulas* by supplying the following data:
 
 ![screen 3](img/screen3.png)
 
-The variable *a* takes a random value out of the set *{2, 3}* and the variable *b* takes a random value out of the set *{10, 20}*. Since the student has to compute *ax+b* for the values *1, 2, 3, 4*, the correct values are precomputed in the global variables *y1, y2, y3, y4*. As correct answer we demand from the student the four values: *[y1, y2, y3, y4]*. 
+The variable *a* takes a random value out of the set *{2, 3}* and the variable *b* takes a random value out of the set *{10, 20}*. Since the student has to compute *ax+b* for the values *1, 2, 3, 4*, the correct values are precomputed in the global variables *y1, y2, y3, y4*. As correct answer we demand from the student the four values: *[y1, y2, y3, y4]*. If the question does not use JSXGraph there would be four input fields for the answers.
 
 ![screen 4](img/screen4.png)
 

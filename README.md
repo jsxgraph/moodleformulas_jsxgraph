@@ -51,7 +51,7 @@ $(function() {
                 showNavigation: true
             });
     
-    var board = formulas.brd;
+    var board = formulas.board;
   
     // Import the initial y-coordinates of the four points from formulas
     var t1 = formulas.get(0); if (t1 === null) { t1 = 0; }
@@ -68,10 +68,10 @@ $(function() {
     // Four points, fixated to the lines, called 'gliders'.
     var point_attr = {fixed: formulas.isSolved, snapToGrid: true, withLabel: false}
     var p = [];
-    p.push(board.create('glider', [1, t1, p11], point_attr));
-    p.push(board.create('glider', [2, t2, p22], point_attr));
-    p.push(board.create('glider', [3, t3, p33], point_attr));
-    p.push(board.create('glider', [4, t4, p44], point_attr));
+    p.push(board.create('glider', [1, t1, line1], point_attr));
+    p.push(board.create('glider', [2, t2, line2], point_attr));
+    p.push(board.create('glider', [3, t3, line3], point_attr));
+    p.push(board.create('glider', [4, t4, line4], point_attr));
 
     // The polyhonal chain, aka. polyline, through the four points
     board.create('polygonalchain', p, {borders: {strokeWidth: 3}});

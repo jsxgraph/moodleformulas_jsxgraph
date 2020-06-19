@@ -44,6 +44,17 @@ $(function() {
 
   // JavaScript code to create the construction.
   var jsxCode = function (formulas) {
+  
+    // -------  IMPORT FROM FORMULAS -------
+    
+    // Import the initial y-coordinates of the four points from formulas
+    var t1 = formulas.get(0); if (t1 === null) { t1 = 0; }
+    var t2 = formulas.get(1); if (t2 === null) { t2 = 0; }
+    var t3 = formulas.get(2); if (t3 === null) { t3 = 0; }
+    var t4 = formulas.get(3); if (t4 === null) { t4 = 0; }
+
+    // -------  JSXGraph -------
+
     // Initialize the construction
     formulas.board = JXG.JSXGraph.initBoard(formulas.elm.id, {
                 axis:true,
@@ -53,15 +64,6 @@ $(function() {
             });
     
     var board = formulas.board;
-  
-    // -------  IMPORT FROM FORMULAS -------
-    // Import the initial y-coordinates of the four points from formulas
-    var t1 = formulas.get(0); if (t1 === null) { t1 = 0; }
-    var t2 = formulas.get(1); if (t2 === null) { t2 = 0; }
-    var t3 = formulas.get(2); if (t3 === null) { t3 = 0; }
-    var t4 = formulas.get(3); if (t4 === null) { t4 = 0; }
-
-    // -------  JSXGraph -------
     // Four invisible, vertical lines
     var line1 = board.create('segment', [[1,-10], [1,100]], {visible:false});
     var line2 = board.create('segment', [[2,-10], [2,100]], {visible:false});
@@ -80,6 +82,7 @@ $(function() {
     board.create('polygonalchain', p, {borders: {strokeWidth: 3}});
 
     // -------  EXPORT TO FORMULAS -------
+  
     // Function to export the y-coordinates of the points to formulas.
     var setValues = function () {
       formulas.set(0, p[0].Y());

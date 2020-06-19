@@ -32,7 +32,6 @@ var JSXQuestion = function (elID, jsxCode, debug) {
     var that = this,
         topEl;
 
-console.log("bbb");       
     /**
      * HTML element containing the board
      * 
@@ -50,7 +49,6 @@ console.log("bbb");
      */
     //this.inputs = $(this.elm).closest(".formulaspart").find("input");
     this.inputs = topEl.querySelectorAll('input');
-    console.log(this.inputs);
 
     // Hide the outcome div
     // Seems to be useless since the dot before formulaspartoutcome is missing.

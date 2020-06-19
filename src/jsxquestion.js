@@ -20,12 +20,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-/*
-<!--<script type="text/javascript" 
-src="https://jsxgraph.uni-bayreuth.de/~alfred/moodleformulas_jsxgraph/src/jsxquestion.js"></script>
--->
-*/
 "use strict";
+
 /**
  *
  * @param {String} elID ID of the HTML element containing JSXGraph
@@ -36,6 +32,7 @@ var JSXQuestion = function (elID, jsxCode, debug) {
     var that = this,
         topEl;
 
+console.log("bbb");       
     /**
      * HTML element containing the board
      * 
@@ -51,12 +48,15 @@ var JSXQuestion = function (elID, jsxCode, debug) {
      * 
      * @type {Array}
      */
-    // this.inputs = $(this.elm).closest(".formulaspart").find("input");
+    //this.inputs = $(this.elm).closest(".formulaspart").find("input");
     this.inputs = topEl.querySelectorAll('input');
+    console.log(this.inputs);
 
-    // Hide the outcome div and the input elements
+    // Hide the outcome div
+    // Seems to be useless since the dot before formulaspartoutcome is missing.
     // $(this.elm).closest(".formulaspart").children("formulaspartoutcome").hide();
-    topEl.querySelectorAll('.formulaspartoutcome').forEach(el => { el.style.display = 'none'; });
+
+    // Hide the input elements
     if (debug !== true) {
         // this.inputs.hide();
         this.inputs.forEach(el => { el.style.display = 'none'; });

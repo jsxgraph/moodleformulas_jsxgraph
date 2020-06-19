@@ -10,12 +10,16 @@ Download the file `src/jsxquestion.js` to the moodle installation or a public se
 
 ## Example
 
+Consider the following question:
+
 ![screen 1](img/screen1.png)
 
-![screen 2](img/screen1.png)
+The correct solution is
 
-![screen 3](img/screen1.png)
+![screen 2](img/screen2.png)
 
-![screen 4](img/screen1.png)
+![screen 3](img/screen3.png)
+
+![screen 4](img/screen4.png)
 
 

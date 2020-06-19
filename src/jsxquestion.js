@@ -70,6 +70,7 @@ var JSXQuestion = function (elID, jsxCode, debug) {
     } else {
         this.isSolved = false;
     }
+    this.solved = this.isSolved;
 
     /**
      * Fill input element of index idx of the formulas question with value.

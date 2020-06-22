@@ -85,8 +85,24 @@ var JSXQuestion = function (elID, jsxCode, debug) {
     };
 
     /**
+     * Set values for all formulas inpout fields
+     *
+     * @param {Array} values Array containing the values to be set.
+     *
+     */
+    this.setAllValues = function (values) {
+        var idx, len = values.length;
+
+        for (idx = 0; idx < len; idx++) {
+            if (!that.isSolved && that.inputs && that.inputs[idx]) {
+                that.inputs[idx].value = Math.round(values[idx] * 100) / 100;
+            }
+        }
+    };
+
+    /**
      * Get the content of input element of index idx of the formulas question.
-     * 
+     *
      * @param {Number} idx Index of the input form, starting at 0.
      */
     this.get = function (idx) {
@@ -98,6 +114,28 @@ var JSXQuestion = function (elID, jsxCode, debug) {
             return n;
         }
         return null;
+    };
+
+    /**
+     * Fetch all values from the formulas input fields
+     *
+     * @param {Number} number_of_fields Number of formulas input fields
+     * @param {Number} default_value Default values if the fields are empty.
+     * @returns {Array} Array of length number_of_fields containing the entries of the formulas
+     * input fields.
+     */
+    this.getAllValues = function(number_of_fields, default_value) {
+        var idx, n,
+            values = [];
+
+        for (idx = 0; idx < number_of_fields; idx++) {
+            n = that.get(idx);
+            if (n === null) {
+                n = default_value;
+            }
+            values.push(n);
+        }
+        return values;
     };
 
     this.brd = null;

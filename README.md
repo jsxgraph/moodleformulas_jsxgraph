@@ -47,10 +47,8 @@ $(function() {
   
     // -------  IMPORT FROM FORMULAS -------
     // Import the initial y-coordinates of the four points from formulas
-    var t1 = formulas.get(0); if (t1 === null) { t1 = 0; }
-    var t2 = formulas.get(1); if (t2 === null) { t2 = 0; }
-    var t3 = formulas.get(2); if (t3 === null) { t3 = 0; }
-    var t4 = formulas.get(3); if (t4 === null) { t4 = 0; }
+    var t1, t2, t3, t4;
+    [t1, t2, t3, t4] = formulas.getAllValues(4, 0);
 
     // -------  JSXGraph -------------------
     // Initialize the construction
@@ -80,17 +78,10 @@ $(function() {
     board.create('polygonalchain', p, {borders: {strokeWidth: 3}});
 
     // -------  EXPORT TO FORMULAS ---------
-    // Function to export the y-coordinates of the points to formulas.
-    var setValues = function () {
-      formulas.set(0, p[0].Y());
-      formulas.set(1, p[1].Y());
-      formulas.set(2, p[2].Y());
-      formulas.set(3, p[3].Y());
-    };
-  
     // Whenever the construction is altered the values of the points are sent to formulas.
     board.on('update', function () {
-        setValues();
+        // Equivalent to formulas.setAllValues( [p[0].Y(), p[1].Y(), p[2].Y(), p[3].Y()] );
+        formulas.setAllValues( p.map(el => el.Y()) );
     });
     board.update();
   };

@@ -36,7 +36,7 @@ Now this question is enriched with a JSXgraph construction. This can be done by 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="https://somedomain.../jsxquestion.js"></script>
 
-<!-- Create a div containing the JSXGraphconstruction -->
+<!-- Create a div containing the JSXGraph construction -->
 <div id="box1" class="jxgbox" style="width:400px; height:400px; margin-left:10px;"></div>
 
 <script type="text/javascript">

@@ -5,8 +5,7 @@ The file `jsxquestion.js` supplies the transfer of values between the formulas q
 
 ## Installation
 
-Download the file `src/jsxquestion.js` to the moodle installation or a public server.
-
+This extension is part of [our Moodle filter](https://github.com/jsxgraph/moodle-filter_jsxgraph).
 
 ## Example
 

@@ -19,22 +19,21 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 "use strict";
 
 /**
- *
  * @param {String} elID ID of the HTML element containing JSXGraph
  * @param {Function} jsxCode JavaScript function containing the construction
  * @param {Boolean} debug  Debug flag. If false the input elements of the formulas question are hidden.
  */
-var JSXQuestion = function (elID, jsxCode, debug) {
+var JSXQuestion = function (elID, jsxCode, debug = false) {
     var that = this,
         topEl;
 
     /**
      * HTML element containing the board
-     * 
+     *
      * @type {String}
      */
     this.elm = document.getElementById(elID);
@@ -44,37 +43,33 @@ var JSXQuestion = function (elID, jsxCode, debug) {
 
     /**
      * Stores the input tags from the formulas question.
-     * 
+     *
      * @type {Array}
      */
-    //this.inputs = $(this.elm).closest(".formulaspart").find("input");
     this.inputs = topEl.querySelectorAll('input');
-
-    // Hide the outcome div
-    // Seems to be useless since the dot before formulaspartoutcome is missing.
-    // $(this.elm).closest(".formulaspart").children("formulaspartoutcome").hide();
 
     // Hide the input elements
     if (debug !== true) {
-        // this.inputs.hide();
         this.inputs.forEach(el => { el.style.display = 'none'; });
     }
 
     /**
      * Indicator if the question has been solved.
-     * 
+     *
      * @type {Boolean}
      */
+    this.isSolved = false;
     if (this.inputs && this.inputs[0]) {
         this.isSolved = this.inputs[0].readOnly;
-    } else {
-        this.isSolved = false;
     }
+    /**
+     * @deprecated
+     */
     this.solved = this.isSolved;
 
     /**
      * Fill input element of index idx of the formulas question with value.
-     * 
+     *
      * @param {Number} idx Index of the input element, starting at 0.
      * @param {Number} val Number to be set.
      */
@@ -121,10 +116,9 @@ var JSXQuestion = function (elID, jsxCode, debug) {
      *
      * @param {Number} number_of_fields Number of formulas input fields
      * @param {Number} default_value Default values if the fields are empty.
-     * @returns {Array} Array of length number_of_fields containing the entries of the formulas
-     * input fields.
+     * @returns {Array} Array of length number_of_fields containing the entries of the formulas input fields.
      */
-    this.getAllValues = function(number_of_fields, default_value) {
+    this.getAllValues = function (number_of_fields, default_value) {
         var idx, n,
             values = [];
 
@@ -141,12 +135,10 @@ var JSXQuestion = function (elID, jsxCode, debug) {
     this.brd = null;
     this.board = null;
 
-    // Execute the JSXGraph / JavaScript code
+    // Execute the JSXGraph JavaScript code
     jsxCode(this);
 
-    /**
-     * Reload the construction
-     */
+    // Reload the construction
     this.reload = function () {
         jsxCode(that);
     };
@@ -155,11 +147,11 @@ var JSXQuestion = function (elID, jsxCode, debug) {
 // Polyfill for element.closest:
 if (!Element.prototype.matches) {
     Element.prototype.matches = Element.prototype.msMatchesSelector ||
-                                Element.prototype.webkitMatchesSelector;
+        Element.prototype.webkitMatchesSelector;
 }
 
 if (!Element.prototype.closest) {
-    Element.prototype.closest = function(s) {
+    Element.prototype.closest = function (s) {
         var el = this;
 
         do {

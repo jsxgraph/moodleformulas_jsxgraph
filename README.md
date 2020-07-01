@@ -35,10 +35,10 @@ It is not necessary to use the code in the old form. Instead, the filter integra
 In addition, the div does not need to be created separately, only the usual filter notation is used.
 The JavaScript code does not need to be packaged in a jQuery function.
 The filter ensures execution at the end of the loading process.
+In fact, jQuery is no longer needed at all.
 
 ```html
 <!-- Load the necessary JavaScript files -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="https://somedomain.../jsxquestion.js""></script>
 
 <!-- Create a div containing the JSXGraph construction -->

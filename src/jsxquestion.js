@@ -23,23 +23,25 @@
 "use strict";
 
 /**
- * @param {String} elID ID of the HTML element containing JSXGraph
- * @param {Function} jsxCode JavaScript function containing the construction
- * @param {Boolean} debug  Debug flag. If false the input elements of the formulas question are hidden.
+ * @param {String}    boardID           ID of the HTML element containing the JSXGraph board. Has to be set with local const BOARDID.
+ * @param {Function}  jsxGraphCode      JavaScript function containing the construction code.
+ * @param {Boolean}   allowInputEntry   Should the original inputs from formulas be displayed and linked to the construction?
+ * @param {Number}    decimalPrecision  Number of digits to round to.
  */
-var JSXQuestion = function (elID, jsxCode, debug = false) {
+var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, decimalPrecision = 2) {
     var that = this,
         topEl;
 
     /**
-     * HTML element containing the board
+     * ID of the board
      *
      * @type {String}
      */
-    this.elm = document.getElementById(elID);
+    this.BOARDID = boardID;
 
-    // Get the first ancestor of the board having class ".formulaspart" (should be a div)
-    topEl = this.elm.closest('.formulaspart');
+    // Get the first ancestor of the board having class ".formulaspart" (should be a div).
+    // ATTENTION!!! The class used here depends on formulas and can make the extension useless when updating formulas!
+    topEl = document.getElementById(this.BOARDID).closest('.formulaspart');
 
     /**
      * Stores the input tags from the formulas question.
@@ -49,9 +51,49 @@ var JSXQuestion = function (elID, jsxCode, debug = false) {
     this.inputs = topEl.querySelectorAll('input');
 
     // Hide the input elements
-    if (debug !== true) {
+    if (allowInputEntry) {
+        this.inputs.forEach(el => { el.addEventListener('input', event => {that.update();}) });
+        this.inputs.forEach(el => { el.addEventListener('change', event => {that.update();}) });
+    } else {
         this.inputs.forEach(el => { el.style.display = 'none'; });
     }
+
+    this.brd = null;
+    this.board = null;
+
+    /**
+     * Initializes the board, saves it in the attributes of JSXQuestion and returns the board.
+     *
+     * @param {Object} attributes              Attributes for function JXG.JSXGraph.initBoard(...).
+     * @param {Object} attributesIfBoxIsGiven  Guarantees backward compatibility with the function JXG.JSXGraph.initBoard(...). The ID that was then passed in the first parameter is ignored!
+     *
+     * @returns {Object}                       JSXGraph board
+     */
+    this.initBoard = function (attributes = {}, attributesIfBoxIsGiven = {}) {
+        var board;
+        if (typeof attributes === 'string' || attributes instanceof String)
+            attributes = attributesIfBoxIsGiven;
+
+        board = JXG.JSXGraph.initBoard(that.BOARDID, attributes);
+        that.brd = board;
+        that.board = board;
+
+        return board;
+    };
+
+    /**
+     * Links the board to the inputs. If a change has been made in the board,
+     * the input with the number inputNumber is assigned the value that the function valueFunction returns.
+     *
+     * @param {Number}    inputNumber
+     * @param {Function}  valueFunction
+     */
+    this.bindInput = function (inputNumber, valueFunction) {
+        that.board.on('update', function () {
+            that.set(inputNumber, valueFunction());
+        });
+        that.board.update();
+    };
 
     /**
      * Indicator if the question has been solved.
@@ -64,83 +106,90 @@ var JSXQuestion = function (elID, jsxCode, debug = false) {
     }
     /**
      * @deprecated
+     * @type {Boolean}
      */
     this.solved = this.isSolved;
 
     /**
      * Fill input element of index idx of the formulas question with value.
      *
-     * @param {Number} idx Index of the input element, starting at 0.
-     * @param {Number} val Number to be set.
+     * @param {Number} inputNumber  Index of the input element, starting at 0.
+     * @param {Number} value        Number to be set.
      */
-    this.set = function (idx, val) {
-        if (!that.isSolved && that.inputs && that.inputs[idx]) {
-            that.inputs[idx].value = Math.round(val * 100) / 100;
+    this.set = function (inputNumber, value) {
+        if (!that.isSolved && that.inputs && that.inputs[inputNumber]) {
+            that.inputs[inputNumber].value = Math.round(value * Math.pow(10, decimalPrecision)) / Math.pow(10, decimalPrecision);
         }
     };
 
     /**
-     * Set values for all formulas inpout fields
+     * Set values for all formulas input fields
      *
-     * @param {Array} values Array containing the values to be set.
-     *
+     * @param {Array} values   Array containing the numbers to be set.
      */
     this.setAllValues = function (values) {
-        var idx, len = values.length;
+        var inputNumber, len = values.length;
 
-        for (idx = 0; idx < len; idx++) {
-            if (!that.isSolved && that.inputs && that.inputs[idx]) {
-                that.inputs[idx].value = Math.round(values[idx] * 100) / 100;
-            }
+        for (inputNumber = 0; inputNumber < len; inputNumber++) {
+            that.set(inputNumber, values[inputNumber]);
         }
     };
 
     /**
      * Get the content of input element of index idx of the formulas question.
      *
-     * @param {Number} idx Index of the input form, starting at 0.
+     * @param {Number}   inputNumber   Index of the input form, starting at 0.
+     * @param {Number}   defaultValue  Number that is returned if the value of the input could not be read or is not a number.
+     *
+     * @returns {Number} Entry of the formulas input field.
      */
-    this.get = function (idx) {
-        if (that.inputs && that.inputs[idx]) {
-            var n = parseFloat(that.inputs[idx].value);
-            if (isNaN(n)) {
-                return null;
-            }
-            return n;
+    this.get = function (inputNumber, defaultValue = null) {
+        var n;
+        if (that.inputs && that.inputs[inputNumber]) {
+            n = parseFloat(that.inputs[inputNumber].value);
+            if (!isNaN(n))
+                return Math.round(n * Math.pow(10, decimalPrecision)) / Math.pow(10, decimalPrecision);
         }
-        return null;
+        return defaultValue;
     };
 
     /**
      * Fetch all values from the formulas input fields
      *
-     * @param {Number} number_of_fields Number of formulas input fields
-     * @param {Number} default_value Default values if the fields are empty.
-     * @returns {Array} Array of length number_of_fields containing the entries of the formulas input fields.
+     * @param {Number}       numberOfFields   Number of formulas input fields
+     * @param {Number,Array} defaultValues    Default values if the fields are empty.
+     *
+     * @returns {Array}      Array of length numberOfFields containing the entries of the formulas input fields.
      */
-    this.getAllValues = function (number_of_fields, default_value) {
-        var idx, n,
-            values = [];
+    this.getAllValues = function (numberOfFields, defaultValues) {
+        var inputNumber,
+            values = [],
+            defaultValue;
 
-        for (idx = 0; idx < number_of_fields; idx++) {
-            n = that.get(idx);
-            if (n === null) {
-                n = default_value;
-            }
-            values.push(n);
+        if (Array.isArray(defaultValues)) {
+            if (defaultValues.length !== numberOfFields)
+                return null;
+        } else {
+            if (isNaN(defaultValues))
+                return null;
+            else
+                defaultValue = defaultValues;
+        }
+
+        for (inputNumber = 0; inputNumber < numberOfFields; inputNumber++) {
+            values.push(
+                that.get(inputNumber, defaultValue || defaultValues[inputNumber])
+            );
         }
         return values;
     };
 
-    this.brd = null;
-    this.board = null;
-
     // Execute the JSXGraph JavaScript code
-    jsxCode(this);
+    jsxGraphCode(this);
 
     // Reload the construction
-    this.reload = function () {
-        jsxCode(that);
+    this.reload = this.update = function () {
+        jsxGraphCode(that);
     };
 };
 

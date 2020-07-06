@@ -143,7 +143,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
      *
      * @returns {Number} Entry of the formulas input field.
      */
-    this.get = function (inputNumber, defaultValue = null) {
+    this.get = function (inputNumber, defaultValue = 0) {
         var n;
         if (that.inputs && that.inputs[inputNumber]) {
             n = parseFloat(that.inputs[inputNumber].value);
@@ -156,18 +156,18 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
     /**
      * Fetch all values from the formulas input fields
      *
-     * @param {Number}       numberOfFields   Number of formulas input fields
-     * @param {Number,Array} defaultValues    Default values if the fields are empty.
+     * @param {Number,Array} defaultValues  Default values if the fields are empty.
      *
-     * @returns {Array}      Array of length numberOfFields containing the entries of the formulas input fields.
+     * @returns {Array}      Array containing the entries of all associated formulas input fields.
      */
-    this.getAllValues = function (numberOfFields, defaultValues) {
+    this.getAllValues = function (defaultValues = 0) {
         var inputNumber,
+            len = that.inputs.length,
             values = [],
             defaultValue;
 
         if (Array.isArray(defaultValues)) {
-            if (defaultValues.length !== numberOfFields)
+            if (defaultValues.length !== len)
                 return null;
         } else {
             if (isNaN(defaultValues))
@@ -176,7 +176,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
                 defaultValue = defaultValues;
         }
 
-        for (inputNumber = 0; inputNumber < numberOfFields; inputNumber++) {
+        for (inputNumber = 0; inputNumber < len; inputNumber++) {
             values.push(
                 that.get(inputNumber, defaultValue || defaultValues[inputNumber])
             );

@@ -65,7 +65,8 @@ To use a JSXGraph board in a formulas question, first create a question in this 
 
 The constructor of class JSXQuestion takes the following parameters:
 
->ID of the HTML element containing the JSXGraph board. 
+: - ID of the HTML element containing the JSXGraph board.
+
 The board can be addressed within a tag using the constant <code>BOARDID</code>. 
 Therefore this parameter has to be set to <code>BOARDID</code>.
 

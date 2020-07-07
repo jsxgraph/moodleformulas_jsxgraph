@@ -11,7 +11,7 @@ JSXGraph is implemented in pure JavaScript and does not rely on any other librar
 
 Have a look at [www.jsxgraph.org](https://jsxgraph.org/).
 
-### Moodle JSXGraph filter
+### About Moodle JSXGraph filter
 
 The [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph) is a plugin for [Moodle](http://moodle.org) to enable function plotting and dynamic geometry constructions with [JSXGraph](http://jsxgraph.org) within a Moodle platform.
 
@@ -64,6 +64,10 @@ To use a JSXGraph board in a formulas question, first create a question in this 
 #### Initialization
 
 The constructor of class JSXQuestion takes the following parameters:
+
+>ID of the HTML element containing the JSXGraph board. 
+The board can be addressed within a tag using the constant <code>BOARDID</code>. 
+Therefore this parameter has to be set to <code>BOARDID</code>.
 
 <table>
     <tr>

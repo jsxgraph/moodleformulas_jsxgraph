@@ -33,7 +33,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
         topEl;
 
     /**
-     * ID of the board
+     * ID of the board.
      *
      * @type {String}
      */
@@ -58,8 +58,17 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
         this.inputs.forEach(el => { el.style.display = 'none'; });
     }
 
-    this.brd = null;
+    /**
+     * Stored JSXGraph board.
+     *
+     * @type {JXG.Board}
+     */
     this.board = null;
+    /**
+     * @deprecated
+     * @type {JXG.Board}
+     */
+    this.brd = null;
 
     /**
      * Initializes the board, saves it in the attributes of JSXQuestion and returns the board.

@@ -1,11 +1,149 @@
-# moodleformulas_jsxgraph
+# Formulas extension for Moodle JSXGraph filter
 
-The moodle plug-in [moodle question type formulas](https://moodle.org/plugins/qtype_formulas), see also <https://moodleformulas.org/>, allows to create question containing random values and multiple answer fields.
-The file `jsxquestion.js` supplies the transfer of values between the formulas question and [JSXGraph](https://jsxgraph.org) constructions. 
+The [moodle question type formulas](https://moodle.org/plugins/qtype_formulas), see also <https://moodleformulas.org>, allows to create questions containing random values and multiple answer fields.
+This extension was created for the [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph) and is used to use JSXGraph constructions in formulas questions.
+It supplies the transfer of values between the formulas question and [JSXGraph](https://jsxgraph.org) constructions. 
+
+### About JSXGraph
+
+JSXGraph is a cross-browser JavaScript library for interactive geometry, function plotting, charting, and data visualization in the web browser.
+JSXGraph is implemented in pure JavaScript and does not rely on any other library. Special care has been taken to optimize the performance.
+
+Have a look at [www.jsxgraph.org](https://jsxgraph.org/).
+
+### Moodle JSXGraph filter
+
+The [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph) is a plugin for [Moodle](http://moodle.org) to enable function plotting and dynamic geometry constructions with [JSXGraph](http://jsxgraph.org) within a Moodle platform.
+
+*The plugin for Moodle also contains these files.*
 
 ## Installation
 
-This extension will be part of [our Moodle filter](https://github.com/jsxgraph/moodle-filter_jsxgraph).
+This extension does not need to be installed separately. 
+Instead, it is already included in the Moodle filter and is delivered with it.
+
+Follow the installation instructions [here](https://github.com/jsxgraph/moodle-filter_jsxgraph#installation).
+
+## Usage
+
+The formulas extension is used within a JSXGraph tag.
+To do this, either the global setting "formulasextension" must be activated in the filter 
+
+![settings](img/settings.png)
+
+or the tag must contain the attribute `ext_formulas`:
+
+```html
+<jsxgraph width="500" height="500" ext_formulas>
+    ...
+</jsxgraph>
+```
+
+### Insert a board into a question
+
+To use a JSXGraph board in a formulas question, first create a question in this category. Then follow the steps below:
+
+1. As usual, assign a meaningful name for the question.
+2. Variables can be defined for the use of formulas. Do this in the "Variables" section. A detailed example of this can be found below.
+3. Write a question in "Question text".
+4. In "Part 1" define the inputs. Several inputs can be defined with `[...]` under "Answer".
+5. Under "Part's text" a JSXGraph board can now be integrated in the usual filter notation. If the extension is not activated globally, the tag attribute "ext_formulas" must be used.
+    * Warning: the code that is inside the `<jsxgraph>` tag must now be declared within a function.
+    * Finally, this function is transferred to an object of the JSXQuestion class with the following call:
+      ```html
+      <jsxgraph width="500" height="500" ext_formulas>
+          var jsxGraphCode = function (question) { ... };
+          new JSXQuestion(BOARDID, jsxGraphCode);
+      </jsxgraph>
+      ```
+      More information on using the JSXQuestion class can be found below.
+    * Within the function `jsxGraphCode` the object of the class JSXQuestion can be accessed via the parameter `question` and its variables and methods can be used. An overview of this can be found below.
+
+### Using the class JSXQuestion
+
+#### Initialization
+
+The constructor of class JSXQuestion takes the following parameters:
+
+<table>
+    <tr>
+        <td>
+            <i>{String}</i>&nbsp;<b>boardID</b>
+        </td>
+        <td>
+            ID of the HTML element containing the JSXGraph board. 
+            The board can be addressed within a tag using the constant <code>BOARDID</code>. 
+            Therefore this parameter has to be set to <code>BOARDID</code>.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{Function}</i>&nbsp;<b>jsxGraphCode</b>
+        </td>
+        <td>
+            JavaScript function containing the construction code.
+        </td>
+    </tr>
+    <tr>
+        <td>
+           <i>{Boolean}</i>&nbsp;<b>allowInputEntry</b> Optional,&nbsp;Default:&nbsp;<code>false</code>
+        </td>
+        <td>
+            Should the original inputs from formulas be displayed and linked to the construction?<br>
+            If this parameter is <code>false</code>, the input fields for users are hidden.<br>
+            If it is set to <code>true</code>, the inputs are displayed and linked to the 
+            construction, so that the function <code>jsxGraphCode(...)</code> is executed again 
+            if there is a change in an input field.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{Number}</i>&nbsp;<b>decimalPrecision</b> Optional,&nbsp;Default:&nbsp;<code>2</code>
+        </td>
+        <td>
+            Number of digits to round to.
+        </td>
+    </tr>
+</table>
+
+#### Attributes
+
+<table>
+    <tr>
+        <td>
+            <i>{String}</i>&nbsp;<b>BOARDID</b>
+        </td>
+        <td>
+            ID of the board.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{Array}</i>&nbsp;<b>inputs</b>
+        </td>
+        <td>
+            Stores the input tags from the formulas question.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{JXG.Board}</i>&nbsp;<b>board</b><br>
+            <i>{JXG.Board}</i>&nbsp;<b>brd</b>&nbsp;(deprecated)
+        </td>
+        <td>
+            Stored JSXGraph board. 
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{Boolean}</i>&nbsp;<b>isSolved</b><br>
+            <i>{Boolean}</i>&nbsp;<b>solved</b>&nbsp;(deprecated)
+        </td>
+        <td>
+            Indicator if the question has been solved.
+        </td>
+    </tr>
+</table>
 
 ## Example
 
@@ -85,4 +223,3 @@ In fact, jQuery is no longer needed at all.
 
 </jsxgraph>
 ```
-

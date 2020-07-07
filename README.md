@@ -63,13 +63,7 @@ To use a JSXGraph board in a formulas question, first create a question in this 
 
 #### Initialization
 
-The constructor of class JSXQuestion takes the following parameters:
-
-<div style="padding-left: 30px;">
-ID of the HTML element containing the JSXGraph board.
-The board can be addressed within a tag using the constant <code>BOARDID</code>. 
-Therefore this parameter has to be set to <code>BOARDID</code>.
-</div>
+The constructor `new JSXQuestion(boardID, jsxGraphCode, allowInputEntry, decimalPrecision)` of class JSXQuestion takes the following parameters:
 
 <table>
     <tr>
@@ -88,6 +82,7 @@ Therefore this parameter has to be set to <code>BOARDID</code>.
         </td>
         <td>
             JavaScript function containing the construction code.
+            The function must expect the object of class JSXQuestion as input.
         </td>
     </tr>
     <tr>
@@ -151,35 +146,110 @@ Therefore this parameter has to be set to <code>BOARDID</code>.
     </tr>
 </table>
 
+#### Methods
+
+<table>
+    <tr>
+        <td>
+            <i>{JXG.Board}</i>&nbsp;<b>initBoard(attributes)</b>
+        </td>
+        <td>
+            Initializes the board, saves it in the attributes of JSXQuestion and returns it.
+            For this, the object in <code>attributes</code> is forwarded to the function 
+            <code>JXG.JSXGraph.initBoard(...)</code>. The string passed during initialization
+            is used as the id for the board. If two parameters are specified (as in the 
+            specification of <code>JXG.JSXGraph.initBoard(...)</code>), the first parameter
+            is ignored.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{void}</i>&nbsp;<b>bindInput(inputNumber,&nbsp;valueFunction)</b>
+        </td>
+        <td>
+            Links the board to the inputs. If a change has been made in the board, the 
+            input with the number <code>inputNumber</code> is assigned the value that 
+            the function <code>valueFunction()</code> returns.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{void}</i>&nbsp;<b>set(inputNumber,&nbsp;value)</b>
+        </td>
+        <td>
+            Fill input element of index <code>inputNumber</code> of the formulas question 
+            with <code>value</code>.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{void}</i>&nbsp;<b>setAllValues(values)</b>
+        </td>
+        <td>
+            Set values for all formulas input fields. The array <code>values</code> 
+            contains the values in the appropriate order.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{Number}</i>&nbsp;<b>get(inputNumber,&nbsp;defaultValue)</b>
+        </td>
+        <td>
+            Get the content of input element of index <code>inputNumber</code> of the
+            formulas question as number. If the value of the input could not be read 
+            or is not a number the optional <code>defaultValue</code> is returned.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{void}</i>&nbsp;<b>getAllValues(defaultValues)</b>
+        </td>
+        <td>
+            Fetch all values from the formulas input fields. If the value of the input 
+            could not be read or is not a number the optional entry of the array 
+            <code>defaultValues</code> is returned.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>{void}</i>&nbsp;<b>reload()</b><br>
+            <i>{void}</i>&nbsp;<b>update()</b>
+        </td>
+        <td>
+            Reload the construction by executing the given function <code>jsxGraphCode</code>.
+        </td>
+    </tr>
+</table>
+
+
 ## Example
 
 Consider the following *formulas* question:
 
-![screen 1](img/screen1.png)
+![screen1](img/screen1.png)
 
 The students should drag the red points such that the blue curve has the equation *y = 2x + 10*.
-After having done so, the student clicks on the Check-button to check the correctness of the solution. The correct solution is
+After having done so, the student clicks on the Check-button to check the correctness of the 
+solution. The correct solution is
 
-![screen 2](img/screen2.png)
+![screen2](img/screen2.png)
 
 The above question can be realized with *formulas* by supplying the following data:
 
 ![screen 3](img/screen3.png)
 
-The variable *a* takes a random value out of the set *{2, 3}* and the variable *b* takes a random value out of the set *{10, 20}*. Since the student has to compute *ax+b* for the values *1, 2, 3, 4*, the correct values are precomputed in the global variables *y1, y2, y3, y4*. As correct answer we demand from the student the four values: *[y1, y2, y3, y4]*. If the question does not use JSXGraph there would be four input fields for the answers.
+The variable *a* takes a random value out of the set *{2, 3}* and the variable *b* takes a 
+random value out of the set *{10, 20}*. Since the student has to compute *ax+b* for the 
+values *1, 2, 3, 4*, the correct values are precomputed in the global variables 
+*y1, y2, y3, y4*. As correct answer we demand from the student the four values: 
+*[y1, y2, y3, y4]*. If the question does not use JSXGraph there would be four input fields 
+for the answers.
 
 ![screen 4](img/screen4.png)
 
-Without JSXGraph the student would have to type the four numbers of the solution into four input fields.
-Now this question is enriched with a JSXgraph construction. This can be done by adding the following code into the field "Part's text" in Part 1.
-
-### development annotation
-
-It is not necessary to use the code in the old form. Instead, the filter integrates JSXGraph.
-In addition, the div does not need to be created separately, only the usual filter notation is used.
-The JavaScript code does not need to be packaged in a jQuery function.
-The filter ensures execution at the end of the loading process.
-In fact, jQuery is no longer needed at all.
+Without JSXGraph the student would have to type the four numbers of the solution into 
+four input fields. Now this question is enriched with a JSXgraph construction.
+This can be done by adding the following code into the field "Part's text" in Part 1:
 
 ```html
 <jsxgraph width="400" height="400" ext_formulas>
@@ -225,7 +295,16 @@ In fact, jQuery is no longer needed at all.
     };
 
     // Execute the JavaScript code.
-    new JSXQuestion(BOARDID, jsxCode, true);
+    new JSXQuestion(BOARDID, jsxCode);
 
 </jsxgraph>
 ```
+
+## Feedback
+
+All bugs, feature requests, feedback, etc., are welcome.
+
+## License
+
+See [here](./LICENSE).
+

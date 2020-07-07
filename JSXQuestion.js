@@ -76,7 +76,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
      * @param {Object} attributes              Attributes for function JXG.JSXGraph.initBoard(...).
      * @param {Object} attributesIfBoxIsGiven  Guarantees backward compatibility with the function JXG.JSXGraph.initBoard(...). The ID that was then passed in the first parameter is ignored!
      *
-     * @returns {Object}                       JSXGraph board
+     * @returns {JXG.Board}                       JSXGraph board
      */
     this.initBoard = function (attributes = {}, attributesIfBoxIsGiven = {}) {
         var board;
@@ -120,7 +120,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
     this.solved = this.isSolved;
 
     /**
-     * Fill input element of index idx of the formulas question with value.
+     * Fill input element of index inputNumber of the formulas question with value.
      *
      * @param {Number} inputNumber  Index of the input element, starting at 0.
      * @param {Number} value        Number to be set.
@@ -145,7 +145,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
     };
 
     /**
-     * Get the content of input element of index idx of the formulas question.
+     * Get the content of input element of index inputNumber of the formulas question.
      *
      * @param {Number}   inputNumber   Index of the input form, starting at 0.
      * @param {Number}   defaultValue  Number that is returned if the value of the input could not be read or is not a number.

@@ -17,6 +17,9 @@ The [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph)
 
 *The plugin for Moodle also contains these files.*
 
+### Contributors
+
+
 ## Installation
 
 This extension does not need to be installed separately. 

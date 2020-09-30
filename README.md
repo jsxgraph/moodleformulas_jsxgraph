@@ -19,6 +19,8 @@ The [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph)
 
 ### Contributors
 
+The project is based on work by [Tim Kos](https://github.com/timkos) and [Marc Bernart](https://github.com/marcbern-at).
+
 
 ## Installation
 

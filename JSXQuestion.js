@@ -167,7 +167,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry = false, deci
      *
      * @param {Number,Array} defaultValues  Default values if the fields are empty.
      *
-     * @returns {Array}      Array containing the entries of all associated formulas input fields.
+     * @returns {Number[]} Array containing the entries of all associated formulas input fields.
      */
     this.getAllValues = function (defaultValues = 0) {
         var inputNumber,

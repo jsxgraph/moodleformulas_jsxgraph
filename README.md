@@ -202,7 +202,7 @@ The constructor `new JSXQuestion(boardID, jsxGraphCode, allowInputEntry, decimal
     </tr>
     <tr>
         <td>
-            <i>{void}</i>&nbsp;<b>getAllValues(defaultValues)</b>
+            <i>{Number[]}</i>&nbsp;<b>getAllValues(defaultValues)</b>
         </td>
         <td>
             Fetch all values from the formulas input fields. If the value of the input 
@@ -259,7 +259,7 @@ This can be done by adding the following code into the field "Part's text" in Pa
 
         // Import the initial y-coordinates of the four points from formulas
         var t1, t2, t3, t4;
-        [t1, t2, t3, t4] = question.getAllValues(4, 0);
+        [t1, t2, t3, t4] = question.getAllValues(4);
 
         // Initialize the construction
         var board = question.initBoard({

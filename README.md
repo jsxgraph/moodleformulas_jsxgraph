@@ -19,7 +19,7 @@ The [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph)
 
 ### Contributors
 
-The project is based on work by [Tim Kos](https://github.com/timkos) and [Marc Bernart](https://github.com/marcbern-at).
+The project is based on work by [Tim Kos](https://github.com/timkos) and [Marc Bernart](https://github.com/marcbern-at). It is currently developed by [The Center of Mobile Learning with Digital Technology](http://mobile-learning.uni-bayreuth.de/) (contact: Alfred Wassermann and Andreas Walter).
 
 
 ## Installation

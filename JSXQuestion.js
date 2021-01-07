@@ -20,10 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-'use strict';
-
-var JXG = JXG || {};
-window.JXG = JXG;
+"use strict";
 
 /**
  * @param {String|String[]} boardID ID of the HTML element containing the JSXGraph board. Has to be set with local const BOARDID0.
@@ -284,7 +281,7 @@ var JSXQuestion = function (boardID, jsxGraphCode, allowInputEntry, decimalPreci
      *
      * @param {Number|Number[]} [defaultValues=0] Default values if the fields are empty.
      *
-     * @returns {Array} Array containing the entries of all associated formulas input fields.
+     * @returns {Number[]} Array containing the entries of all associated formulas input fields.
      */
     this.getAllValues = function (defaultValues) {
         var inputNumber,

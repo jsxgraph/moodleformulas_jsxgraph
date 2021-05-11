@@ -62,6 +62,13 @@ var JSXQuestion = function(boardID, jsxGraphCode, allowInputEntry, decimalPrecis
     }
 
     /**
+     * HTML element containing the board.
+     * @deprecated
+     * @type {HTMLElement}
+     */
+    this.elm = document.getElementById(elID);
+
+    /**
      * Array with the IDs of the boards.
      * @type {String[]}
      */
@@ -80,7 +87,7 @@ var JSXQuestion = function(boardID, jsxGraphCode, allowInputEntry, decimalPrecis
     /**
      * ID of the *first* board.
      * @type {String}
-     * @deprecated
+     * @deprecated use array {@see BOARDIDS} instead
      */
     this.BOARDID = this.firstBOARDID;
 
@@ -131,7 +138,7 @@ var JSXQuestion = function(boardID, jsxGraphCode, allowInputEntry, decimalPrecis
     this.board = this.firstBoard;
     /**
      * @type {JXG.Board}
-     * @deprecated
+     * @deprecated use attribute {@see board} instead
      */
     this.brd = this.firstBoard;
 
@@ -242,7 +249,7 @@ var JSXQuestion = function(boardID, jsxGraphCode, allowInputEntry, decimalPrecis
         this.isSolved = this.inputs[0].readOnly;
     }
     /**
-     * @deprecated
+     * @deprecated use attribute {@see isSolved} instead
      * @type {Boolean}
      */
     this.solved = this.isSolved;

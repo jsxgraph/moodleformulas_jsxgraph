@@ -1,6 +1,6 @@
 # Formulas extension for Moodle JSXGraph filter
 
-The [moodle question type formulas](https://moodle.org/plugins/qtype_formulas), see also <https://moodleformulas.org>, allows to create questions containing random values and multiple answer fields.
+The [moodle question type formulas](https://moodle.org/plugins/qtype_formulas), see also [dynamiccourseware.org](https://dynamiccourseware.org/), allows to create questions containing random values and multiple answer fields.
 This extension was created for the [Moodle JSXGraph filter](https://github.com/jsxgraph/moodle-filter_jsxgraph) and is used to use JSXGraph constructions in formulas questions.
 It supplies the transfer of values between the formulas question and [JSXGraph](https://jsxgraph.org) constructions. 
 

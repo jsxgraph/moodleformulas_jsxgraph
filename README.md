@@ -293,7 +293,7 @@ The constructor `new JSXQuestion(boardID, jsxGraphCode, allowInputEntry, decimal
     </tr>
     <tr>
         <td>
-            <i>{void}</i>&nbsp;<b>getAllValues(defaultValues)</b><br><br><small>
+            <i>{Number[&nbsp;]}</i>&nbsp;<b>getAllValues(defaultValues)</b><br><br><small>
             <b>Parameters:</b><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{Number&nbsp;|&nbsp;Number[&nbsp;]}</i>&nbsp;<b>defaultValues</b>
             </small>
